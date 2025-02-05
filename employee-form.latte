@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body id="employee-form-page">
+<div id="root">
+    <nav>
+        <a href="?cmd=dashboard" id="dashboard-link">Dashboard</a> |
+        <a href="?cmd=employee-list" id="employee-list-link">Employees</a> |
+        <a href="?cmd=employee-form" id="employee-form-link">Add Employee</a> |
+        <a href="?cmd=task-list" id="task-list-link">Tasks</a> |
+        <a href="?cmd=task-form" id="task-form-link">Add Task</a>
+    </nav>
+
+    <main>
+
+        <div n:if="$errors" n:inner-foreach="$errors as $error" id="error-block">
+            {$error} <br />
+        </div>
+
+        <div class="content-card">
+            <div class="content-card-header">Add Employee</div>
+            <div class="content-card-content">
+                <form method="post" id="form" enctype="multipart/form-data">
+                    <input type="hidden" value="{$id}" name="id">
+
+                    <div class="cell">
+                        <div class="label-cell"><label for="fn">First name:</label></div>
+                        <div class="input-cell"><input name="firstName" type="text" id="fn" value="{$firstName}"></div>
+                    </div>
+
+                    <div class="cell">
+                        <div class="label-cell"><label for="ln">Last name:</label></div>
+                        <div class="input-cell"><input name="lastName" type="text" id="ln" value="{$lastName}"></div>
+                    </div>
+
+                    <div class="cell">
+                        <div class="label-cell"><label for="pic">Picture:</label></div>
+                        <div class="input-cell"><input id="pic" name="picture" type="file"></div>
+                    </div>
+
+                    <br>
+
+                    <div class="button-cell"><button type="submit" name="submitButton" formaction="?cmd=employee-save">Save</button></div>
+
+                    {if $id > 0 || $edit}
+                        <div class="button-cell"><button type="submit" name="deleteButton" formaction="?cmd=employee-delete">Delete</button></div>
+                    {/if}
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        icd007 Sample Application
+    </footer>
+
+
+</div>
+</body>
+</html>

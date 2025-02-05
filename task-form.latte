@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body id="task-form-page">
+<div id="root">
+    <nav>
+        <a href="?cmd=dashboard" id="dashboard-link">Dashboard</a> |
+        <a href="?cmd=employee-list" id="employee-list-link">Employees</a> |
+        <a href="?cmd=employee-form" id="employee-form-link">Add Employee</a> |
+        <a href="?cmd=task-list" id="task-list-link">Tasks</a> |
+        <a href="?cmd=task-form" id="task-form-link">Add Task</a>
+    </nav>
+
+    <main>
+
+        <div n:if="$errors" n:inner-foreach="$errors as $error" id="error-block">
+            {$error} <br />
+        </div>
+
+        <div class="content-card">
+            <div class="content-card-header">Add Task</div>
+            <div class="content-card-content">
+                <form method="post" id="form">
+                    <input type="hidden" name="id" value="{$id}">
+
+                    <div class="cell">
+                        <div class="label-cell"><label for="desc">Description:</label></div>
+                        <div class="input-cell"><textarea id="desc" name="description">{$description}</textarea></div>
+                    </div>
+
+                    <div class="cell">
+                        <div class="label-cell">Estimate:</div>
+                        <div class="input-cell">
+                            <label><input type="radio" name="estimate" value="1" {if $estimate == '1'}checked{/if}>1</label>
+                            <label><input type="radio" name="estimate" value="2" {if $estimate == '2'}checked{/if}>2</label>
+                            <label><input type="radio" name="estimate" value="3" {if $estimate == '3'}checked{/if}>3</label>
+                            <label><input type="radio" name="estimate" value="4" {if $estimate == '4'}checked{/if}>4</label>
+                            <label><input type="radio" name="estimate" value="5" {if $estimate == '5'}checked{/if}>5</label>
+                        </div>
+                    </div>
+
+                    <div class="cell">
+                        <div class="label-cell">Assigned to:</div>
+                        <div class="input-cell">
+                            <select id="employee" name="employeeId">
+                                <option value=""></option>
+
+                                {if $selectedEmployee && is_object($selectedEmployee)}
+                                    <option value="{$selectedEmployee->id}" selected>{$selectedEmployee}</option>
+                                {/if}
+
+                                {foreach $employees as $employee}
+                                    {if !$selectedEmployee || !is_object($selectedEmployee) || $employee->id != $selectedEmployee->id}
+                                        <option value="{$employee->id}">{$employee}</option>
+                                    {/if}
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+
+                    {if $id > 0 || $edit}
+                        <div class="cell">
+                            <div class="label-cell"><label for="isCompleted">Completed:</label></div>
+                            <div class="input-cell"><input id="isCompleted" type="checkbox" name="isCompleted" {if $status == 'Closed'}checked{/if}/></div>
+                        </div>
+                    {/if}
+
+                    <br>
+
+                    <div class="button-cell">
+                            <button type="submit" name="submitButton" formaction="?cmd=task-save">Save</button>
+                    </div>
+
+                    {if $id > 0 || $edit}
+                        <div class="button-cell">
+                            <button type="submit" name="deleteButton" formaction="?cmd=task-delete">Delete</button>
+                        </div>
+                    {/if}
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+    <footer>
+        icd0007 Sample Application
+    </footer>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body id="employee-list-page">
+<div id="root">
+    <nav>
+        <a href="?cmd=dashboard" id="dashboard-link">Dashboard</a> |
+        <a href="?cmd=employee-list" id="employee-list-link">Employees</a> |
+        <a href="?cmd=employee-form" id="employee-form-link">Add Employee</a> |
+        <a href="?cmd=task-list" id="task-list-link">Tasks</a> |
+        <a href="?cmd=task-form" id="task-form-link">Add Task</a>
+    </nav>
+
+    <main>
+
+        {if $message === 'success'}
+            <div id="message-block">Saved!</div>
+        {elseif $message === 'deleted'}
+            <div id="message-block">Deleted!</div>
+        {/if}
+
+        <div class="content-card">
+            <div class="content-card-header">Employees</div>
+            <div class="content-card-content">
+                {foreach $employees as $employee}
+                    <div class="employee-item">
+                        <img src="{$employee->picture}" data-employee-id="{$employee->id}" alt="profile picture"/>
+                        <span class="name" data-employee-id="{$employee->id}">{$employee}</span>
+                        <span class="link"><a id="employee-edit-link-{$employee->id}" href="?cmd=employee-edit&id={$employee->id}">Edit</a></span>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        icd007 Sample Application
+    </footer>
+
+
+</div>
+</body>
+</html>

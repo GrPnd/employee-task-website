@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body id="dashboard-page">
+<div id="root">
+    <nav>
+        <a href="?cmd=dashboard" id="dashboard-link">Dashboard</a> |
+        <a href="?cmd=employee-list" id="employee-list-link">Employees</a> |
+        <a href="?cmd=employee-form" id="employee-form-link">Add Employee</a> |
+        <a href="?cmd=task-list" id="task-list-link">Tasks</a> |
+        <a href="?cmd=task-form" id="task-form-link">Add Task</a>
+    </nav>
+
+    <main>
+        <div class="dashboard-content-box">
+            <div class="employees-box">
+                <div class="content-card">
+                    <div class="content-card-header">Employees</div>
+                    <div class="content-card-content">
+                        {foreach $employees as $employee}
+                            <div class="employee-item">
+                                <img src="{$employee->picture}" data-employee-id="{$employee->id}" alt="profile picture"/>
+                                <span class="name" data-employee-id="{$employee->id}">{$employee}</span>
+                                <span id="employee-task-count-{$employee->id}" class="count">{$employeesTaskCount[$employee->id]}</span>
+                            </div>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+            <div class="tasks-box">
+                <div class="content-card">
+                    <div class="content-card-header">Tasks</div>
+                    <div class="content-card-content">
+                        {foreach $tasks as $task}
+                            <div class="task-item">
+                                <span class="name" data-task-id="{$task->id}">{$task->description}</span>
+                                <br>
+                                <div id="task-state-{$task->id}" class="status {$task->status}">{$task->status}</div>
+                                <div class="boxes">
+                                    {for $i = 0; $i < $task->estimate; $i++}
+                                        <div class="box" id="colored"></div>
+                                    {/for}
+                                    {for $j = 0; $j < 5 - $task->estimate; $j++}
+                                        <div class="box" id="uncolored"></div>
+                                    {/for}
+                                </div>
+                            </div>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        icd007 Sample Application
+    </footer>
+
+
+</div>
+</body>
+</html>
